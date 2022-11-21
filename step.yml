@@ -115,6 +115,15 @@ inputs:
         If you specify a relative path then it will be
         relative to the *working directory* (which you
         can optionally specify as well).
+  - timestamp: "no"
+    opts:
+      category: Config
+      title: Enable timestamp for logs?
+      description: Enable timestamp for logs?
+      is_required: true
+      value_options:
+      - "yes"
+      - "no"
   - is_debug: "no"
     opts:
       category: Debug

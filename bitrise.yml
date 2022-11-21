@@ -3,7 +3,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
-  - IS_DEBUG: "no"
+  - IS_DEBUG: "yes"
 
 workflows:
   test:
@@ -16,10 +16,6 @@ workflows:
         - is_create_path: true
     - path::./:
         inputs:
-        - content: |-
-            #!/bin/bash
-            git log -n 5 --pretty=format:"%h - %s %cr <%an>" --abbrev-commit --date=relative
-            exit 0
         - is_debug: $IS_DEBUG
     - path::./:
         inputs:
@@ -50,6 +46,7 @@ workflows:
             }
         - runner_bin: go run
         - script_file_path: main.go
+        - timestamp: "yes"
         - is_debug: $IS_DEBUG
 
   # ----------------------------------------------------------------
