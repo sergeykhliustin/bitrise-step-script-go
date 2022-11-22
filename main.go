@@ -80,7 +80,7 @@ func main() {
 				newStr := fmt.Sprintf("\u001B[%d;1m", i)
 				text = strings.Replace(text, old, newStr, -1)
 			}
-			_, _ = os.Stdout.WriteString(text)
+			_, _ = os.Stdout.WriteString(text + "\n")
 		}
 	} else {
 		_, copyErr := io.Copy(os.Stdout, file)
