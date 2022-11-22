@@ -9,7 +9,6 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	"time"
 )
 
 func main() {
@@ -22,7 +21,7 @@ func main() {
 	scriptFilePath := os.Getenv("script_file_path")
 	isDebug := os.Getenv("is_debug")
 	logger.EnableDebugLog(isDebug == "yes")
-	timestampEnabled := os.Getenv("timestamp") == "yes"
+	mapColors := os.Getenv("map_colors") == "yes"
 
 	logger.Debugf("==> Start")
 
@@ -71,13 +70,17 @@ func main() {
 	file, err := pty.Start(cmd)
 	defer func() { _ = file.Close() }()
 	logger.Debugf("Start logging")
-	if timestampEnabled {
+	if mapColors {
 		scanner := bufio.NewScanner(file)
 		scanner.Split(bufio.ScanLines)
 		for scanner.Scan() {
-			timestamp := []byte(time.Now().Format("15:04:05") + " ")
-			text := append(scanner.Bytes(), []byte("\n")...)
-			_, _ = os.Stdout.Write(append(timestamp, text...))
+			text := scanner.Text()
+			for i := 30; i <= 36; i++ {
+				old := fmt.Sprintf("\u001B[0;1;%dm", i)
+				newStr := fmt.Sprintf("\u001B[%d;1m", i)
+				text = strings.Replace(text, old, newStr, -1)
+			}
+			_, _ = os.Stdout.WriteString(text)
 		}
 	} else {
 		_, copyErr := io.Copy(os.Stdout, file)

@@ -124,6 +124,15 @@ inputs:
       value_options:
       - "yes"
       - "no"
+  - map_colors: "no"
+    opts:
+      category: Config
+      title: Map colors to bitrise color set?
+      description: Map colors to bitrise color set?
+      is_required: true
+      value_options:
+        - "yes"
+        - "no"
   - is_debug: "no"
     opts:
       category: Debug
